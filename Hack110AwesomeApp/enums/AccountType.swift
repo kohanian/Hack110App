@@ -9,8 +9,8 @@
 import Foundation
 
 enum AccountType: String, Codable {
-    case checking = "Checking"
-    case savings = "Savings"
-    case retirement = "Retirement"
-    case other = "Other"
+    case checking = "CHECKING"
+    case savings = "SAVINGS"
+    case retirement = "RETIREMENT"
+    case other = "OTHER"
 }

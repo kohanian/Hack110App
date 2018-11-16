@@ -23,10 +23,12 @@ class AccountDetailsListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
     struct Constants {
-        static let nibName = "AccountCell"
-        static let reuseIdentifier = "accountCell"
+        static let accountCellNibName = "AccountCell"
+        static let accountCellReuseIdentifier = "accountCell"
+        static let transactionCellNibName = "TransactionCell"
+        static let transactionCellReuseIdentifier = "transactionCell"
         static let collectionViewLineSpacingForSections: CGFloat = 10
-        static let collectionViewItemHeight: CGFloat = 160
+        static let collectionViewItemHeight: CGFloat = 120
     }
     
     var transactions: [Transaction] = []
@@ -37,8 +39,17 @@ class AccountDetailsListViewController: UIViewController {
         
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        self.collectionView.register(UINib(nibName: Constants.nibName, bundle: nil), forCellWithReuseIdentifier: Constants.reuseIdentifier)
-        // Do any additional setup after loading the view.
+        self.collectionView.register(UINib(nibName: Constants.accountCellNibName, bundle: nil), forCellWithReuseIdentifier: Constants.accountCellReuseIdentifier)
+        self.collectionView.register(UINib(nibName: Constants.transactionCellNibName, bundle: nil), forCellWithReuseIdentifier: Constants.transactionCellReuseIdentifier)
+        self.collectionView.backgroundColor = .uncDarkBlue
+        self.view.backgroundColor = .uncDarkBlue
+        
+        TransactionsApi.getTransactions { (transactions) in
+            self.transactions = transactions
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+        }
     }
 }
 
@@ -48,6 +59,10 @@ extension AccountDetailsListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == 0 {
+            return CGSize(width: collectionView.frame.width,
+                          height: 160.0)
+        }
         return CGSize(width: collectionView.frame.width,
                       height: Constants.collectionViewItemHeight)
     }
@@ -57,12 +72,16 @@ extension AccountDetailsListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10.0, left: 0.0, bottom: 0.0, right: 0.0)
+        return UIEdgeInsets(top: 0.0, left: 0.0, bottom: 10.0, right: 0.0)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y > 100 {
+            self.parent?.navigationItem.titleView = Hack110NavigationController.basicLabel(string: account.type.rawValue)
+        } else {
+            self.parent?.navigationItem.titleView = Hack110NavigationController.hack110Label
+        }
     }
-    
 }
 
 extension AccountDetailsListViewController: UICollectionViewDataSource {
@@ -96,7 +115,7 @@ extension AccountDetailsListViewController: UICollectionViewDataSource {
 
 extension AccountDetailsListViewController: AccountDetailsListViewControllerDelegate {
     func collectionView(_ collectionView: UICollectionView, accountsCellAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.reuseIdentifier, for: indexPath) as? AccountCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.accountCellReuseIdentifier, for: indexPath) as? AccountCell else {
             return UICollectionViewCell(frame: .zero)
         }
         cell.configure(model: account)
@@ -104,10 +123,10 @@ extension AccountDetailsListViewController: AccountDetailsListViewControllerDele
     }
     
     func collectionView(_ collectionView: UICollectionView, transactionsCellAtIndexPath indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.reuseIdentifier, for: indexPath) as? AccountCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.transactionCellReuseIdentifier, for: indexPath) as? TransactionCell else {
             return UICollectionViewCell(frame: .zero)
         }
-        cell.configure(model: account)
+        cell.configure(model: transactions[indexPath.row])
         return cell
     }
     

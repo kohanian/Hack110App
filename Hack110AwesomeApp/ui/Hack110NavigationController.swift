@@ -41,4 +41,12 @@ extension Hack110NavigationController {
         
         return titleLabel
     }
+    
+    static func basicLabel(string: String) -> UILabel {
+        let titleLabel = UILabel()
+        titleLabel.sizeToFit()
+        titleLabel.text = string
+        titleLabel.textColor = .white
+        return titleLabel
+    }
 }

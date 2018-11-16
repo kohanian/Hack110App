@@ -9,6 +9,8 @@
 import Foundation
 
 enum TransactionType: String, Codable {
-    case post = "Post"
-    case withdrawal = "Withdrawal"
+    case post = "POST"
+    case withdrawal = "WITHDRAWAl"
+    case transfer = "TRANSFER"
+    case purchase = "PURCHASE"
 }

@@ -14,6 +14,10 @@ protocol Moneyable {
 
 extension Moneyable {
     var displayAmount: String {
+        if moneyAmount < 0.0 {
+            let actualAmount = moneyAmount * -1.00000
+            return String(format: "-$%.2f", actualAmount)
+        }
         return String(format: "$%.2f", moneyAmount)
     }
 }

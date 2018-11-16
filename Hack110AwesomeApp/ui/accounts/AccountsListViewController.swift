@@ -27,8 +27,8 @@ class AccountsListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.injectTestData()
         self.commonInit()
+        self.makeCall()
     }
     
     private func injectTestData() {
@@ -44,6 +44,15 @@ class AccountsListViewController: UIViewController {
         self.accountsCollectionView.dataSource = self
         self.accountsCollectionView.register(UINib(nibName: Constants.nibName, bundle: nil), forCellWithReuseIdentifier: Constants.reuseIdentifier)
         self.accountsCollectionView.reloadData()
+    }
+    
+    private func makeCall() {
+        AccountsApi.getAccounts { (accounts) in
+            self.accounts = accounts
+            DispatchQueue.main.async {
+                self.accountsCollectionView.reloadData()
+            }
+        }
     }
 }
 

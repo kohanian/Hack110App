@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+class BaseApi {
+    static let baseUrl = "https://53vrvoknsb.execute-api.us-east-1.amazonaws.com/latest"
+}

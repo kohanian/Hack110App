@@ -10,16 +10,10 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AccountCell" customModule="Hack110AwesomeApp" customModuleProvider="target">
-            <connections>
-                <outlet property="accountAmountLabel" destination="KBR-y9-DRt" id="nTK-Eh-Juo"/>
-                <outlet property="accountNumberLabel" destination="5Qd-uA-a3O" id="BxY-E1-SaT"/>
-                <outlet property="accountTypeLabel" destination="tTn-BV-ihc" id="AGz-qW-Zlw"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="iN0-l3-epB">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="AccountCell" customModule="Hack110AwesomeApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="193"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tTn-BV-ihc">
@@ -40,20 +34,34 @@
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Total Balance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FMa-Y8-m8M">
+                    <rect key="frame" x="283" y="142" width="76" height="14.5"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="KBR-y9-DRt" secondAttribute="trailing" constant="16" id="84o-Ql-jSy"/>
+                <constraint firstItem="FMa-Y8-m8M" firstAttribute="trailing" secondItem="KBR-y9-DRt" secondAttribute="trailing" id="9Iw-SB-9Vq"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="FMa-Y8-m8M" secondAttribute="bottom" constant="16" id="DPQ-Ev-Pwu"/>
                 <constraint firstItem="tTn-BV-ihc" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="16" id="E2F-UF-gIB"/>
                 <constraint firstItem="5Qd-uA-a3O" firstAttribute="leading" secondItem="tTn-BV-ihc" secondAttribute="leading" id="GcW-hA-d0W"/>
                 <constraint firstItem="tTn-BV-ihc" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="16" id="JSt-zZ-ZWQ"/>
-                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="KBR-y9-DRt" secondAttribute="bottom" constant="16" id="PUH-AP-Kel"/>
+                <constraint firstItem="FMa-Y8-m8M" firstAttribute="top" secondItem="KBR-y9-DRt" secondAttribute="bottom" constant="4" id="dKA-yv-gJT"/>
                 <constraint firstItem="5Qd-uA-a3O" firstAttribute="top" secondItem="tTn-BV-ihc" secondAttribute="bottom" constant="4" id="fnD-B9-xGB"/>
                 <constraint firstItem="KBR-y9-DRt" firstAttribute="top" secondItem="5Qd-uA-a3O" secondAttribute="bottom" constant="8" id="ucB-ww-8Aq"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
-            <point key="canvasLocation" x="172" y="-180.80959520239881"/>
+            <connections>
+                <outlet property="accountAmountLabel" destination="KBR-y9-DRt" id="rEQ-Te-ECO"/>
+                <outlet property="accountBalanceLabel" destination="FMa-Y8-m8M" id="iLk-sY-Usg"/>
+                <outlet property="accountNumberLabel" destination="5Qd-uA-a3O" id="ifZ-xR-duk"/>
+                <outlet property="accountTypeLabel" destination="tTn-BV-ihc" id="OSS-tH-ydZ"/>
+            </connections>
+            <point key="canvasLocation" x="172" y="-394.45277361319341"/>
         </view>
     </objects>
 </document>

@@ -8,27 +8,37 @@
 
 import UIKit
 
-class AccountView: UITableViewCell {
-    @IBOutlet var accountTypeLabel: UILabel!
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String!) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
+class AccountCell: UICollectionViewCell {
+    @IBOutlet weak var accountTypeLabel: UILabel!
+    @IBOutlet weak var accountNumberLabel: UILabel!
+    @IBOutlet weak var accountAmountLabel: UILabel!
+    @IBOutlet weak var accountBalanceLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.commonInit()
+    }
+    
+    private func commonInit() {
+        self.setComponentLabelColors()
+    }
+    
+    private func setComponentLabelColors() {
+        self.backgroundColor = .uncDarkBlue
+        self.accountNumberLabel.textColor = .white
+        self.accountTypeLabel.textColor = .white
+        self.accountAmountLabel.textColor = .white
+        self.accountBalanceLabel.textColor = .white
     }
 }
 
-extension AccountView: Configurable {
+extension AccountCell: Configurable {
     typealias T = Account
     
     func configure(model: Account) {
         // configure with view
+        self.accountTypeLabel.text = model.type.rawValue
+        self.accountNumberLabel.text = model.numberDisplay
+        self.accountAmountLabel.text = model.displayAmount
     }
 }

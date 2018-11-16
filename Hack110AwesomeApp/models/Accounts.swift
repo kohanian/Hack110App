@@ -7,3 +7,18 @@
 //
 
 import Foundation
+
+struct Accounts {
+    var accounts: [Account]
+    
+    enum AccountsCodingKeys: String, CodingKey {
+        case accounts = "accounts"
+    }
+}
+
+extension Accounts: Decodable {
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: AccountsCodingKeys.self)
+        self.accounts = try container.decode([Account].self, forKey: .accounts)
+    }
+}
