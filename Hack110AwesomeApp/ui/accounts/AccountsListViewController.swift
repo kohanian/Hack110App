@@ -12,6 +12,8 @@ class AccountsListViewController: UIViewController {
     
     @IBOutlet weak var accountsCollectionView: UICollectionView!
     
+    var refresher:UIRefreshControl!
+    
     struct Constants {
         static let primaryColor = UIColor.uncBlue
         static let nibName = "AccountCell"
@@ -31,6 +33,10 @@ class AccountsListViewController: UIViewController {
         self.makeCall()
     }
     
+    @objc func loadData() {
+        makeCall()
+    }
+    
     private func injectTestData() {
         accounts.append(Account(type: .checking, number: "1111111111", amount: 64.35))
         accounts.append(Account(type: .savings, number: "1212121212", amount: 30.01))
@@ -43,13 +49,20 @@ class AccountsListViewController: UIViewController {
         self.accountsCollectionView.delegate = self
         self.accountsCollectionView.dataSource = self
         self.accountsCollectionView.register(UINib(nibName: Constants.nibName, bundle: nil), forCellWithReuseIdentifier: Constants.reuseIdentifier)
-        self.accountsCollectionView.reloadData()
+        
+        
+        self.refresher = UIRefreshControl()
+        self.accountsCollectionView.alwaysBounceVertical = true
+        self.refresher.tintColor = .white
+        self.refresher.addTarget(self, action: #selector(loadData), for: .valueChanged)
+        self.accountsCollectionView.addSubview(refresher)
     }
     
     private func makeCall() {
         AccountsApi.getAccounts { (accounts) in
             self.accounts = accounts
             DispatchQueue.main.async {
+                self.refresher.endRefreshing()
                 self.accountsCollectionView.reloadData()
             }
         }

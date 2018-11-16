@@ -22,6 +22,8 @@ protocol AccountDetailsListViewControllerDelegate {
 class AccountDetailsListViewController: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    var refresher: UIRefreshControl!
     struct Constants {
         static let accountCellNibName = "AccountCell"
         static let accountCellReuseIdentifier = "accountCell"
@@ -36,7 +38,11 @@ class AccountDetailsListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.commonInit()
+        self.makeCall()
+    }
+    
+    private func commonInit() {
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.register(UINib(nibName: Constants.accountCellNibName, bundle: nil), forCellWithReuseIdentifier: Constants.accountCellReuseIdentifier)
@@ -44,9 +50,22 @@ class AccountDetailsListViewController: UIViewController {
         self.collectionView.backgroundColor = .uncDarkBlue
         self.view.backgroundColor = .uncDarkBlue
         
+        self.refresher = UIRefreshControl()
+        self.collectionView.alwaysBounceVertical = true
+        self.refresher.tintColor = .white
+        self.refresher.addTarget(self, action: #selector(loadData), for: .valueChanged)
+        self.collectionView.addSubview(refresher)
+    }
+    
+    @objc func loadData() {
+        self.makeCall()
+    }
+    
+    func makeCall() {
         TransactionsApi.getTransactions { (transactions) in
             self.transactions = transactions
             DispatchQueue.main.async {
+                self.refresher.endRefreshing()
                 self.collectionView.reloadData()
             }
         }
@@ -76,7 +95,7 @@ extension AccountDetailsListViewController: UICollectionViewDelegateFlowLayout {
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y > 100 {
+        if scrollView.contentOffset.y > 150 {
             self.parent?.navigationItem.titleView = Hack110NavigationController.basicLabel(string: account.type.rawValue)
         } else {
             self.parent?.navigationItem.titleView = Hack110NavigationController.hack110Label

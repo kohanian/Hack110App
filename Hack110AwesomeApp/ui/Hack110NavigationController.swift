@@ -47,6 +47,7 @@ extension Hack110NavigationController {
         titleLabel.sizeToFit()
         titleLabel.text = string
         titleLabel.textColor = .white
+        titleLabel.font = UIFont.systemFont(ofSize: 24.0)
         return titleLabel
     }
 }
